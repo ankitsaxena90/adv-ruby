@@ -31,14 +31,9 @@ module MyObjectStore
         def find_by_#{attr}(val)
           filtered_obj = []
           $object_array.select do |obj|
-            if obj.#{attr}.eql?(val)
-              filtered_obj << obj
-              puts filtered_obj.inspect
-            else 
-              puts "Not present"
-            end
+            filtered_obj << obj if obj.#{attr}.eql?(val)
           end
-          
+          filtered_obj
         end
         }
       end
@@ -57,7 +52,7 @@ class Play
   end
 end
 p2 = Play.new
-p2.fname = ""
+p2.fname = "Ray"
 p2.age = 25
 p2.email = "x@ymail.com"
 p2.save
@@ -70,6 +65,6 @@ p3.save
 Play.collect
 Play.count
 print "Find by fname :"
-Play.find_by_fname("Ray")
+puts Play.find_by_fname("Ray")
 print "Find by email :"
-Play.find_by_email("m@cs.com")
+puts Play.find_by_email("m@cs.com")
