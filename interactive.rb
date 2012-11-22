@@ -4,10 +4,10 @@ def take_input
   puts "Enter some Code (q/Q) to quit the program or Press Enter to evaluate"
   input = gets.chomp
   $array.push(input.to_s)
-  checkInput(input.to_s)
+  check_input(input.to_s)
 end
 
-def checkInput(str)
+def check_input(str)
   if str.match(@regex)
     puts "Bye"
     exit(0)
