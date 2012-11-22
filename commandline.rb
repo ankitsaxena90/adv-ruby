@@ -1,5 +1,5 @@
 def create_method(method_name, code)
-	instance_eval "def #{method_name}
+  instance_eval "def #{method_name}
     puts eval '#{code}'
   end"
   puts "Call to the function #{method_name}"
