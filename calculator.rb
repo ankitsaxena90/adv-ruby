@@ -1,8 +1,8 @@
 class Calculator
-	def calculate(op1, op , op2)
-		print "#{op1} #{op} #{op2} = "
-		puts eval "#{op1}" + "#{op}" + "#{op2}"
-	end
+  def calculate(op1, op , op2)
+    print "#{op1} #{op} #{op2} = "
+    puts eval "#{op1}" + "#{op}" + "#{op2}"
+  end
 end
 
 puts "Enter first Operand"
