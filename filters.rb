@@ -8,7 +8,8 @@ module Filters
   $after_except_methods = []
 
   def self.included(klass)
-   
+    klass.const_set(:METHOD_HASH, {})
+
     def klass.method_added(name)
       return if @_adding_a_method
       @_adding_a_method = true
@@ -17,35 +18,37 @@ module Filters
     end
    
     def klass.before_filter(*args)
-      args.each do |param|
-        if param.class == Hash
-          if param.has_key?(:only)
-            $before_only_methods.concat(param[:only])
-          elsif param.has_key?(:except)
-            $before_except_methods.concat(param[:except])
+      args.each do |arg|
+        if arg.class == Hash
+          if arg.has_key?(:only)
+            $before_only_methods.concat(arg[:only])
+          elsif arg.has_key?(:except)
+            $before_except_methods.concat(arg[:except])
           end
         else
-          $before_filters << param if !($before_filters.include?(param))
+          $before_filters << arg if !($before_filters.include?(arg))
         end
       end
     end
 
     def klass.after_filter(*args)
-      args.each do |param|
-        if param.class == Hash
-          if param.has_key?(:only)
-            $after_only_methods.concat(param[:only])
-          elsif param.has_key?(:except)
-            $after_except_methods.concat(param[:except])
+      args.each do |arg|
+        if arg.class == Hash
+          if arg.has_key?(:only)
+            $after_only_methods.concat(arg[:only])
+          elsif arg.has_key?(:except)
+            $after_except_methods.concat(arg[:except])
           end
         else
-          $after_filters << param if !($after_filters.include?(param))
+          $after_filters << arg if !($after_filters.include?(arg))
         end
       end
     end
   end
 
   def self.wrap_method(klass, method)
+    method_hash = klass.const_get(:METHOD_HASH, {})
+    method_hash[method] = klass.instance_method(method)
     body = %{
       def #{method}(*args, &block)
         run_methods = []
