@@ -8,8 +8,7 @@ module Filters
   $after_except_methods = []
 
   def self.included(klass)
-    klass.const_set(:METHOD_HASH, {})
-
+   
     def klass.method_added(name)
       return if @_adding_a_method
       @_adding_a_method = true
@@ -47,8 +46,6 @@ module Filters
   end
 
   def self.wrap_method(klass, method)
-    method_hash = klass.const_get(:METHOD_HASH, {})
-    method_hash[method] = klass.instance_method(method)
     body = %{
       def #{method}(*args, &block)
         run_methods = []
