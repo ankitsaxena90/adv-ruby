@@ -12,10 +12,10 @@ def create_class(class_name)
   return klass
 end
 
-def create_object(cls)
+def create_object(cls, rows)
   class_objects = []
-  1.upto($rows.length - 1) do |i|
-    class_objects[i - 1] = cls.new($rows[i], $rows[0])
+  1.upto(rows.length - 1) do |i|
+    class_objects[i - 1] = cls.new(rows[i], rows[0])
   end
   puts class_objects.inspect
 end
@@ -27,14 +27,14 @@ file_name = gets.chomp
 class_name = file_name.gsub(".csv","").capitalize!
 
 read_file = File.open(file_name, "r")
-$rows = []
+rows = []
 read_file.each_line { |line| 
   fields = []
   line.split(",").each do |val|
     fields << val.strip
   end
-  $rows.push(fields)
+  rows.push(fields)
 }
 
 cls = create_class(class_name)
-create_object(cls)
+create_object(cls, rows)
