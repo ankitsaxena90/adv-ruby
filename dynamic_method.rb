@@ -4,7 +4,7 @@ class StringSubclass < String
     if self.reverse == self
       puts "#{ self } is palindrome."
     else
-      puts "#{ str } is not palindrome."
+      puts "#{ self } is not palindrome."
     end
   end
 
